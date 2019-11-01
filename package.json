@@ -1,5 +1,5 @@
 {
-	"//1": "describes your app and its dependencies",
+	"//1": "My attempt at FCC advanced node project",
 	"//2": "https://docs.npmjs.com/files/package.json",
 	"//3": "updating this file will download and update your packages",
 	"name": "FCC-Advanced-Node-and-Express",
@@ -8,14 +8,16 @@
 	"description": "What am I about?",
 	"main": "server.js",
 	"scripts": {
-		"start": "node server.js"
+		"start": "nodemon server.js"
 	},
 	"dependencies": {
-		"express": "^4.14.1",
-		"cors": "^2.8.1",
 		"body-parser": "^1.16.0",
+		"cors": "^2.8.1",
+		"dotenv": "^8.2.0",
+		"express": "^4.14.1",
+		"helmet": "^3.4.0",
 		"mongodb": "^2.2.22",
-		"helmet": "^3.4.0"
+		"pug": "^0.1.0"
 	},
 	"engines": {
 		"node": "4.4.3"
@@ -29,5 +31,8 @@
 		"hyperdev",
 		"express"
 	],
-	"license": "MIT"
+	"license": "MIT",
+	"devDependencies": {
+		"nodemon": "^1.19.4"
+	}
 }
