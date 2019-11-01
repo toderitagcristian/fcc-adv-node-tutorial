@@ -25,6 +25,23 @@ app.use(passport.initialize());
 
 app.set('view engine', 'pug');
 
+const ObjectID = require('mongodb').ObjectID;
+
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+
+passport.deserializeUser((id, done) => {
+  /* db.collection('users').findOne(
+    {_id: new ObjectID(id)},
+      (err, doc) => {
+        done(null, doc);
+      }
+  ); */
+  done(null, null);
+});
+
+
 app.route('/')
   .get((req, res) => {
     //res.sendFile(process.cwd() + '/views/index.html');
