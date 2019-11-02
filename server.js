@@ -29,23 +29,6 @@ app.use(passport.initialize());
 
 app.set('view engine', 'pug');
 
-passport.deserializeUser((id, done) => {
-  db.collection('users').findOne(
-    { _id: new ObjectID(id) },
-    (err, doc) => {
-      done(null, doc);
-    }
-  );
-});
-
-
-app.route('/')
-  .get((req, res) => {
-    //res.sendFile(process.cwd() + '/views/index.html');
-    res.render(process.cwd() + '/views/pug/index', { title: 'Hello', message: 'Please login' });
-  });
-
-
 mongo.connect(process.env.DATABASE, (err, db) => {
   if (err) {
     console.log('Database error: ' + err);
@@ -53,6 +36,15 @@ mongo.connect(process.env.DATABASE, (err, db) => {
     console.log('Successful database connection');
     passport.serializeUser((user, done) => {
       done(null, user._id);
+    });
+
+    passport.deserializeUser((id, done) => {
+      db.collection('users').findOne(
+        { _id: new ObjectID(id) },
+        (err, doc) => {
+          done(null, doc);
+        }
+      );
     });
 
     passport.use(new LocalStrategy(
@@ -73,4 +65,18 @@ mongo.connect(process.env.DATABASE, (err, db) => {
   }
 });
 
+app.route('/')
+  .get((req, res) => {
+    //res.sendFile(process.cwd() + '/views/index.html');
+    res.render(process.cwd() + '/views/pug/index', { title: 'Hello', message: 'Please login', showLogin: true });
+  });
 
+app.route('/login').
+  post(passport.authenticate('local', { failureRedirect: '/' }), (req, res) => {
+    res.redirect('/profile');
+  });
+
+app.route('/profile').
+  get((req, res) => {
+    res.render(process.cwd() + '/views/pug/profile');
+  });
