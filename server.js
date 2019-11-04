@@ -9,6 +9,7 @@ const routes      = require('./routes.js');
 const auth        = require('./auth.js');
 
 const app = express();
+require('dotenv').config()
 
 fccTesting(app); //For FCC testing purposes
 
